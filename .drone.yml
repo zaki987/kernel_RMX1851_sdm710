@@ -1,24 +1,16 @@
---- 
-clone: 
-  depth: 1
 kind: pipeline
-name: Blaster4385Pipeline
-steps: 
-  - name: submodules
-    image: alpine/git
-    commands:
-     - git submodule init
-     - git submodule update
-  - 
-    environment: 
-      TG_TOKEN: 
-        from_secret: TOKEN
-      CHANNEL_ID:
-        from_secret: CHATID
-    commands:
-      - "curl https://raw.githubusercontent.com/Blaster4385/scripts/main/build | bash"
-    image: fadlyas/kernel_dockerfile:latest
-    name: Build
-    trigger: 
-      branch: 
-        - master
+name: Zaki
+
+clone:
+  depth: 1
+
+steps:
+- name: Building
+  image: z4nyx/docker:latest
+  environment:
+    chat_id:
+      from_secret: CHAT_ID
+    token:
+      from_secret: BOT_API_KEY
+  commands:
+  - git submodule update --init --recursive && bash build.sh
